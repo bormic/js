@@ -1,0 +1,16 @@
+function palindrome(str) {
+  const regex = /[(:)]|[:)]|[_,.-]|\s/g;
+  str = str.split("").reverse().join("");
+  str = str.toLowerCase().split(regex).join('');
+  let palin = str.split("").reverse().join("");
+  palin = palin.toLowerCase().split(regex).join('');
+  //console.log(palin);
+  //console.log(str);
+  if (str == palin){
+    return true;
+  }
+  else {
+    return false;}
+}
+
+palindrome("eye");

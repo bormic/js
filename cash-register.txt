@@ -1,0 +1,124 @@
+function Staus(status, change) {
+  this.status = status;
+  this.change = change;
+}
+
+
+function convertToChange(num, ciid) {
+  let ciid1 = ciid;
+  let num1 = num;
+  let rzym = [];
+  let val100 = 0;
+  let val20 = 0;
+  let val10 = 0;
+  let val5 = 0;
+  let val1 = 0;
+  let val025 = 0;
+  let val01 = 0;
+  let val005 = 0;
+  let val001 = 0;
+  //console.log(num1);
+  while (num1 > 0) {
+    while (num1 >= 100 && ciid1[8][1] != 0){
+      num1 -= 100;
+      ciid1[8][1] -= 100;
+      val100 += 100;
+      //console.log(num1, ciid1[8][1], val100);
+    } while (num1 >= 20 && ciid1[7][1] != 0) {
+      num1 -= 20;
+      ciid1[7][1] -= 20;
+      val20 += 20;
+      //console.log(num1, ciid1[7][1], val20);
+    } while (num1 >= 10 && ciid1[6][1] != 0) {
+      num1 -= 10;
+      ciid1[6][1] -= 10;
+      val10 += 10;
+    } while (num1 >= 5 && ciid1[5][1] != 0) {
+      num1 -= 5;
+      ciid1[5][1] -= 5;
+      val5 += 5;
+    } while (num1 >= 1 && ciid1[4][1] != 0) {
+      num1 -= 1;
+      ciid1[4][1] -= 1;
+      val1 += 1;
+    } while (num1 >= 0.25 && ciid1[3][1] != 0) {
+      num1 -= 0.25;
+      ciid1[3][1] -= 0.25;
+      val025 += 0.25;
+    } while (num1 >= 0.1 && ciid1[2][1] != 0) {
+      num1 -= 0.1;
+      ciid1[2][1] -= 0.1;
+      val01 += 0.1;
+    } while (num1 >= 0.05 && ciid1[1][1] != 0) {
+      num1 -= 0.05;
+      ciid1[1][1] -= 0.05;
+      val005 += 0.05;
+    } while (num1 >= 0.009 && ciid1[0][1] != 0) {
+        num1 -= 0.01;
+        num1 = num1.toFixed(2);
+        ciid1[0][1] -= 0.01;
+        ciid1[0][1] = ciid1[0][1].toFixed(2);
+        val001 += 0.01;
+        //console.log(num1, ciid1[0][1], val001.toFixed(2));
+      }
+  }
+  //console.log(val100);
+  if (val100 > 0) {rzym.push(["ONE HUNDRED", val100]);};
+  //console.log(val20);
+  if (val20 > 0) {rzym.push(["TWENTY", val20]);};
+  if (val10 > 0) {rzym.push(["TEN", val10]);};
+  if (val5 > 0) {rzym.push(["FIVE", val5]);};
+  if (val1 > 0) {rzym.push(["ONE", val1]);};
+  if (val025 > 0) {rzym.push(["QUARTER", val025]);};
+  if (val01 > 0) {rzym.push(["DIME", val01]);};
+  if (val005 > 0) {rzym.push(["NICKEL", val005]);};
+  if (val001 > 0) {rzym.push(["PENNY", Number(val001.toFixed(2))]);};
+ if (num1 < 0) {num1 = 0;};
+ if (num1 == 0) {
+ return rzym}
+ else {return false}
+}
+
+
+function checkCashRegister(price, cash, cid) {
+  const cid1 = cid;
+  let change = cash - price;
+  const val = [
+  ["PENNY", 0.01],
+  ["NICKEL", 0.05],
+  ["DIME", 0.1],
+  ["QUARTER", 0.25],
+  ["ONE", 1],
+  ["FIVE", 5],
+  ["TEN", 10],
+  ["TWENTY", 20],
+  ["ONE HUNDRED", 100]
+];
+
+let sumOfCid = cid1.map(ci => ci[1]).reduce((sum, cids) => sum + cids, 0);
+let found = val.filter(elem => elem[1] == change);
+let arr = [];
+arr = (convertToChange(change, cid1));
+if (change > sumOfCid | arr === false) {
+let pay = new Staus("INSUFFICIENT_FUNDS", []);
+//console.log(pay);
+return pay;
+} else if (val.find(element => element[1] == change)) {
+let pay1 = new Staus("CLOSED", found);
+console.log(pay1);
+return pay1;
+} else {
+  sumOfCid = cid1.map(ci => ci[1]).reduce((sum, cids) => sum + cids, 0);
+  if (sumOfCid == 0) {
+    cid[0][1] = Number(arr[0][1]);
+  let pay3 = new Staus("CLOSED", cid);
+  console.log(pay3);
+  return pay3;
+  } else {
+  let pay2 = new Staus("OPEN", arr);
+  console.log(pay2);
+  return pay2;}
+  }
+}
+
+checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);

@@ -1,0 +1,32 @@
+function rot13(str) {
+  let cip = 0;
+  let arr = [];
+  let slowo = []
+  let wynik = [];
+  let temp = "";
+  let co =  'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let str1 = str.split(" ");
+  //console.log(str1);
+  for (let i = 0; i < str1.length; i++) {
+    arr = str1[i];
+    //console.log(arr, arr.length);
+    for (let j = 0; j < arr.length; j++)
+    {
+    if (arr[j] == "." | arr[j] == "?" | arr[j] == "!") {
+      wynik.push(arr[j]);
+    } else {
+    cip = 0;
+    cip = co.indexOf(arr[j]) + 13;
+    wynik.push(co.charAt(cip))
+    }}
+    wynik = wynik.join("");
+  //console.log(wynik);
+  slowo.push(wynik);
+  wynik = [];
+  //console.log(slowo);
+  }
+  console.log(slowo.join(" "));
+  return slowo.join(" ");
+}
+
+rot13("SERR CVMMN!");

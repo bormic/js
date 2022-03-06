@@ -1,0 +1,9 @@
+function telephoneCheck(str) {
+  let rege = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  if (rege.test(str)) {
+    return true;    
+  }
+  return false;
+}
+
+telephoneCheck("555-555-5555");     
